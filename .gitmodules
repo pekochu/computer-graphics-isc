@@ -1,0 +1,3 @@
+[submodule "NormansRepo"]
+	path = "Normans Repo"
+	url = https://github.com/norman-ipn/Computer-Graphics
