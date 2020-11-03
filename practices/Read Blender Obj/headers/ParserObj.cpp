@@ -187,3 +187,17 @@ void translate (Vector3 &position, float xf, float yf) {
     position.X += xf; 
     position.Y += yf; 
 } 
+
+void rotate(vector<Vertex> &vertices, int n, int x_pivot, int y_pivot, int angle) { 
+    int i = 0; 
+    while (i < n) { 
+        int x_shifted = vertices[i].Position.X - x_pivot; 
+        int y_shifted = vertices[i].Position.Y - y_pivot; 
+  
+        vertices[i].Position.X = x_pivot + (x_shifted*COS(angle)  
+                          - y_shifted*SIN(angle)); 
+        vertices[i].Position.Y = y_pivot + (x_shifted*SIN(angle)  
+                          + y_shifted*COS(angle)); 
+        i++; 
+    } 
+} 

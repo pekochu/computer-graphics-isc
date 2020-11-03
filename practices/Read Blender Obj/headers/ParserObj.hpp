@@ -2,6 +2,9 @@
 
 using namespace std;
 
+#define SIN(x) sin(x * 3.141592653589/180) 
+#define COS(x) cos(x * 3.141592653589/180) 
+
 // Structure: Vector3
 //
 // Description: A 3D Vector that Holds Positional Data
@@ -86,3 +89,4 @@ string firstToken(const string&);
 void findNewCoordinate(int [][2], float [][1]);
 void scale(Vector3 &, int, int);
 void translate(Vector3 &, float, float);
+void rotate(vector<Vertex> &, int, int, int, int);
