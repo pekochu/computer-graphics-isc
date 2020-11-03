@@ -40,10 +40,13 @@ int main(int argc, char const *argv[]){
     if(meshModel.Vertices.size() != 0){
         scale(meshModel, 0);
         translate(meshModel, 5, 5);
+        rotate(meshModel, 0, 0, 30);
+        translate(meshModel, 0, 0);
 
         unsigned char r = 0xFF;
         unsigned char g = 0x00;
         unsigned char b = 0x00;
+
         /* for (int i = 0; i < int(meshModel.Vertices.size()) - 1; i+=1){
             // draw the model
             mRaster->drawLine(meshModel.Vertices[i].Position.X, meshModel.Vertices[i].Position.Y,
@@ -61,8 +64,11 @@ int main(int argc, char const *argv[]){
 
         for(int i = 0; i < int(meshModel.Faces.size()); i++){
             for(int j = 0; j < int(meshModel.Faces[i].Vertices.size())-1; j+=1){
-                mRaster->drawLine(meshModel.Faces[i].Vertices[j].Position.X, meshModel.Faces[i].Vertices[j].Position.Y,
-                    meshModel.Faces[i].Vertices[j+1].Position.X, meshModel.Faces[i].Vertices[j+1].Position.Y, r, g, b);
+                unsigned int x1 = meshModel.Faces[i].Vertices[j].Position.X;
+                unsigned int y1 = meshModel.Faces[i].Vertices[j].Position.Y;
+                unsigned int x2 = meshModel.Faces[i].Vertices[j+1].Position.X;
+                unsigned int y2 = meshModel.Faces[i].Vertices[j+1].Position.Y;
+                mRaster->drawLine(x1, y1, x2, y2, r, g, b);
             }
         }
     }else{

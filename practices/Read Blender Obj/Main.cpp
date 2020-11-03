@@ -53,8 +53,11 @@ int printPerspectives(string filename, int view){
 
         for(int i = 0; i < int(meshModel.Faces.size()); i++){
             for(int j = 0; j < int(meshModel.Faces[i].Vertices.size())-1; j+=1){
-                mRaster->drawLine(meshModel.Faces[i].Vertices[j].Position.X, meshModel.Faces[i].Vertices[j].Position.Y,
-                    meshModel.Faces[i].Vertices[j+1].Position.X, meshModel.Faces[i].Vertices[j+1].Position.Y, r, g, b);
+                unsigned int x1 = meshModel.Faces[i].Vertices[j].Position.X;
+                unsigned int y1 = meshModel.Faces[i].Vertices[j].Position.Y;
+                unsigned int x2 = meshModel.Faces[i].Vertices[j+1].Position.X;
+                unsigned int y2 = meshModel.Faces[i].Vertices[j+1].Position.Y;
+                mRaster->drawLine(x1, y1, x2, y2, r, g, b);
             }
         }
     }else{

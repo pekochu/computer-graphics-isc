@@ -224,7 +224,7 @@ void translate(Mesh &model, float x, float y){
         syHighest = (model.Vertices[i].Position.Y > syHighest) ? model.Vertices[i].Position.Y : syHighest; 
     }
 
-    cout << "Translating model to (" << (abs(sxLowest) + x) << ", " << (abs(syLowest) + y) << ")" << endl;
+    cout << "Translating model to (" << x << ", " << y << ")" << endl;
     for (int i = 0; i < int(model.Vertices.size()); i++){
         // Translate the vertices
         performTranslate(model.Vertices[i].Position, abs(sxLowest) + x, abs(syLowest) + y);
@@ -236,3 +236,10 @@ void translate(Mesh &model, float x, float y){
         }
     }
 }
+
+void rotate(Mesh &model, int x_pivot, int y_pivot, int angle) { 
+    performRotate(model.Vertices, model.Vertices.size(), x_pivot, y_pivot, angle);
+    for(int i = 0; i < model.Faces.size(); i++){
+        performRotate(model.Faces[i].Vertices, model.Faces[i].Vertices.size(), x_pivot, y_pivot, angle);
+    }
+} 

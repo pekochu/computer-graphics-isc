@@ -109,4 +109,4 @@ void performRotate(vector<Vertex> &, int, int, int, int);
 // Functions to transformation
 void scale(Mesh &, int);
 void translate(Mesh &, float, float);
-void rotate(Mesh &, int, int, int, int);
+void rotate(Mesh &, int, int, int);
