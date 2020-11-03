@@ -19,7 +19,7 @@ class Raster{
     void setPixel(unsigned int x, unsigned int y, 
             unsigned char r, unsigned char g, unsigned char b);
 
-    void write(const char* arg);
+    void write(string arg);
 
     void randomLines(unsigned int n);
 
@@ -28,7 +28,7 @@ class Raster{
             unsigned char r,
             unsigned char g,
             unsigned char b){
-        naiveLine(x1, y1, x2, y2, r, g, b);
+        ddaLine(x1, y1, x2, y2, r, g, b);
     }
 
     void drawNaiveLine(unsigned int x1, unsigned int y1, 

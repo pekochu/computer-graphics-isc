@@ -2,8 +2,16 @@
 
 using namespace std;
 
+// Rotations
 #define SIN(x) sin(x * 3.141592653589/180) 
 #define COS(x) cos(x * 3.141592653589/180) 
+
+// Enumarations for setting XY, XZ, YZ
+enum viewsFlags {
+    XY_VIEW = 1,
+    XZ_VIEW = 3,
+    YZ_VIEW = 5
+};
 
 // Structure: Vector3
 //
@@ -60,6 +68,10 @@ struct Vertex {
     Vector3 Position;
 };
 
+struct Facesx{
+    vector<Vertex> Vertices;
+};
+
 // Structure: Mesh
 //
 // Description: A Simple Mesh Object that holds
@@ -77,16 +89,22 @@ struct Mesh {
     std::string MeshName;
     // Vertex List
     std::vector<Vertex> Vertices;
+    // Faces list
+    std::vector<Facesx> Faces;
 };
 
 // parse .OBJ file
-void readObj(ifstream&, Raster*);
+void readObj(ifstream&, Raster*, Mesh&, int);
 void split(const string&, vector<string>&, string);
-void getVertices(vector<Vertex> &, const vector<Vector3>&, string);
+void getVertices(vector<Facesx> &, vector<Vertex> &, const vector<Vector3>&, string);
 string tail(const string&);
 string firstToken(const string&);
-// Homogeneus space algorithms
+// Transformation algorithms
 void findNewCoordinate(int [][2], float [][1]);
-void scale(Vector3 &, int, int);
-void translate(Vector3 &, float, float);
-void rotate(vector<Vertex> &, int, int, int, int);
+void performScale(Vector3 &, int, int);
+void performTranslate(Vector3 &, float, float);
+void performRotate(vector<Vertex> &, int, int, int, int);
+// Functions to transformation
+void scale(Mesh &, int);
+void translate(Mesh &, float, float);
+void rotate(Mesh &, int, int, int, int);

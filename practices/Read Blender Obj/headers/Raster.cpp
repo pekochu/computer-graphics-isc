@@ -15,13 +15,13 @@ void Raster::setPixel(unsigned int x, unsigned int y,
     data[x][y][2] = b;
 }
 
-void Raster::write(const char *arg){
+void Raster::write(string arg){
     int x = 0;
     int y = 0;
 
     FILE *fp;
-    char *filename = (char*)calloc(strlen(arg)+4, sizeof(char));
-    sprintf(filename, "%s.ppm", arg);
+    char *filename = (char*)calloc(arg.size()+4, sizeof(char));
+    sprintf(filename, "%s.ppm", arg.c_str());
 
     fp = fopen(filename, "wb");
     fprintf(fp, "P6\n1920 1080 255\n");
@@ -82,10 +82,10 @@ void Raster::ddaLine(unsigned int x1, unsigned int y1,
 }
 
 void Raster::bresenhamLine(unsigned int x1, unsigned int y1, 
-        unsigned int x2, unsigned int y2, 
-        unsigned char r,
-        unsigned char g,
-        unsigned char b){
+            unsigned int x2, unsigned int y2, 
+            unsigned char r,
+            unsigned char g,
+            unsigned char b){
     // here
     int dx = x2 - x1;
     int dy = y2 - y1;

@@ -2,7 +2,7 @@ CFLAGS = -O0 -g
 CC = g++
 
 line: raster.o parserobj.o main.o
-	$(CC) $(CFLAGS) -o parser.out headers/main.o headers/raster.o headers/parserobj.o
+	$(CC) $(CFLAGS) -pthread -o parser.out headers/main.o headers/raster.o headers/parserobj.o
 
 main.o: Main.cpp
 	$(CC) $(CFLAGS) -o headers/main.o -c Main.cpp
