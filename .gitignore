@@ -27,3 +27,6 @@ tests/
 
 # VS code
 .vscode
+
+# Weight files
+*.ppm

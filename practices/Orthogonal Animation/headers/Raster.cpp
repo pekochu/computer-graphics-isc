@@ -15,15 +15,13 @@ void Raster::setPixel(unsigned int x, unsigned int y,
     data[x][y][2] = b;
 }
 
-void Raster::write(string arg){
+void Raster::write(char *arg){
     int x = 0;
     int y = 0;
 
-    FILE *fp;
-    char *filename = (char*)calloc(arg.size()+4, sizeof(char));
-    sprintf(filename, "%s.ppm", arg.c_str());
+    FILE *fp;    
 
-    fp = fopen(filename, "wb");
+    fp = fopen(arg, "wb");
     fprintf(fp, "P6\n1920 1080 255\n");
     for(y = 0; y < 1080; y++) {
         for(x = 0;x < 1920; x++) {
@@ -50,6 +48,16 @@ void Raster::randomLines(unsigned int n){
         g = distC(engine);
         b = distC(engine);
         naiveLine(x1, y1, x2, y2, r, g, b);
+    }
+}
+
+void Raster::clear(){
+    for(int y = 0; y < 1080; y++) {
+        for(int x = 0;x < 1920; x++) {
+            data[x][y][0] = 0xFF;
+            data[x][y][1] = 0xFF;
+            data[x][y][2] = 0xFF;
+        } 
     }
 }
 
@@ -164,7 +172,7 @@ void Raster::bresenhamLine(unsigned int x1, unsigned int y1,
             yIni = yEnd;
             yEnd = aux;
         }
-        for (unsigned int i = yIni; i <= yEnd; i++) {
+        for (int i = yIni; i <= yEnd; i++) {
             if (xIni >= 0 && xIni < 1920 && i >= 0 && i < 1080) {
                 setPixel(xIni, i, r, g, b);
             }

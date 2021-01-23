@@ -13,6 +13,14 @@ enum viewsFlags {
     YZ_VIEW = 5
 };
 
+// Rotation enumeration on X, Y and Z
+enum rotateFlags {
+    ROTATE_ON_X = 1,
+    ROTATE_ON_Y = 2,
+    ROTATE_ON_Z = 3
+};
+
+
 extern int VIEW_FLAG;
 
 // Structure: Vector3
@@ -58,14 +66,16 @@ struct Facesx{
 // Description: A Simple Mesh Object that holds
 //	a name, a vertex list, and an index list
 struct Mesh {
-    // Default Constructor
-    Mesh(){
 
-    }
+    // Default Constructor
+    Mesh();
+
     // Variable Set Constructor
-    Mesh(std::vector<Vertex>& _Vertices) {
-        Vertices = _Vertices;
-    }
+    Mesh(std::vector<Vertex>& _Vertices);
+
+    // Copy constructor
+    Mesh(const Mesh &obj);
+
     // Mesh Name
     std::string MeshName;
     // Vertex List
@@ -80,13 +90,13 @@ void split(const string&, vector<string>&, string);
 void getVertices(vector<Facesx> &, vector<Vertex> &, const vector<Vector3>&, string);
 string tail(const string&);
 string firstToken(const string&);
-// Transformation algorithms
-void findNewCoordinate(int [][2], float [][1]);
-void performScale(Vector3 &, int, int);
-void performTranslate(Vector3 &, float, float);
-void performRotate(vector<Vertex> &, int, int, int, int);
-void applyMatrix(Vector3 &, int n, double matrix[4][4]);
-// Functions to transformation
+// helper functions to transformations
+void getMaxMins(vector<Vertex>&, float matrix[10]);
+// functions to perform rotations, translations, scaletions
+void applyMatrix(vector<Vertex>&, float matrix[4][4]);
 void scale(Mesh &, int);
-void translate(Mesh &, float, float);
-void rotate(Mesh &, int, double);
+void translate(Mesh &, float, float, float);
+void focalTranslation(Mesh &, float, float, float, float);
+void translation(Mesh &, float, float, float);
+void transform3D(Mesh &);
+void rotate(Mesh &, float, int);

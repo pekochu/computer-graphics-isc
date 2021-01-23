@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <array>
 #include <string>
 #include <fstream>
 #include <cstring>
@@ -22,14 +23,16 @@ class Raster{
     void setPixel(unsigned int x, unsigned int y, 
             unsigned char r, unsigned char g, unsigned char b);
 
-    void write(string arg);
+    void write(char* arg);
 
     void randomLines(unsigned int n);
+
+    void clear();
 
     void drawLine(unsigned int x1, unsigned int y1, 
             unsigned int x2, unsigned int y2, 
             unsigned char r, unsigned char g, unsigned char b){
-        bresenhamLine(x1, y1, x2, y2, r, g, b);
+        ddaLine(x1, y1, x2, y2, r, g, b);
     }
 
     void drawNaiveLine(unsigned int x1, unsigned int y1, 

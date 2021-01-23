@@ -2,11 +2,30 @@
 
 int VIEW_FLAG = XY_VIEW;
 
+Mesh::Mesh(){ /* CONSTRUCTOR */ }; 
+
+Mesh::Mesh(std::vector<Vertex>& _Vertices) {
+    Vertices = _Vertices;
+}
+
+Mesh::Mesh(const Mesh &obj) {
+
+    for (int i = 0; i < int(obj.Vertices.size()); i++){
+        Vertices.push_back(obj.Vertices[i]);
+    }
+
+    for(int i = 0; i < int(obj.Faces.size()); i++){
+        Faces.push_back(obj.Faces[i]);
+    }
+
+    MeshName = obj.MeshName;
+}
+
+
 void readObj(ifstream &file, Raster *mRaster, Mesh& model){
     vector<Facesx> Faces;
     vector<Vector3> Positions;
     vector<Vertex> vertices;
-    vector<unsigned int> indices;
 
     string line;
     while(getline(file, line)){
@@ -135,60 +154,46 @@ string firstToken(const string &in) {
     return "";
 }
 
-// Transformation functions
-// find new pixel
-void findNewCoordinate(int s[][2], float p[][1]) { 
-    float temp[2][1] = { 0 }; 
-  
-    for (int i = 0; i < 2; i++) 
-        for (int j = 0; j < 1; j++) 
-            for (int k = 0; k < 2; k++) 
-                temp[i][j] += (s[i][k] * p[k][j]); 
-  
-    p[0][0] = temp[0][0]; 
-    p[1][0] = temp[1][0]; 
-} 
-  
-// Scaling the point
-void performScale(Vector3 &position, int sx, int sy) {   
-    // Initializing the Scaling Matrix. 
-    int s[2][2] = { sx, 0, 0, sy }; 
-    float p[2][1]; 
-  
-    // Scaling the point
-    p[0][0] = position.X;
-    p[1][0] = position.Y;
-    findNewCoordinate(s, p);
-    position.X = p[0][0];
-    position.Y = p[1][0];
-} 
-
-// translate the vertices
-void performTranslate (Vector3 &position, float xf, float yf) {   
-    // calculating translated coordinates 
-    position.X += xf; 
-    position.Y += yf; 
-} 
-
-// perform rotation
-void performRotate(vector<Vertex> &vertices, int n, int x_pivot, int y_pivot, int angle) { 
-    int i = 0; 
-    while (i < n) { 
-        int x_shifted = vertices[i].Position.X - x_pivot; 
-        int y_shifted = vertices[i].Position.Y - y_pivot; 
-  
-        vertices[i].Position.X = x_pivot + (x_shifted*COS(angle)  
-                          - y_shifted*SIN(angle)); 
-        vertices[i].Position.Y = y_pivot + (x_shifted*SIN(angle)  
-                          + y_shifted*COS(angle)); 
-        i++; 
-    } 
-} 
-
 /*
-  This function apply the matrix to perform rotations, translations, scaletions
+ * Helper functions
+ */
+void getMaxMins(vector<Vertex> &verts, float matrix[10]){
+    float sxLowest = 0.0f, sxHighest = 0.0f;
+    float syLowest = 0.0f, syHighest = 0.0f;
+    float szLowest = 0.0f, szHighest = 0.0f;
+    int sxavg = 0, syavg = 0, sfavg = 0;
+
+    for (int i = 0; i < int(verts.size()); i++){
+        sxLowest = (verts[i].Position.X < sxLowest) ? verts[i].Position.X : sxLowest; 
+        sxHighest = (verts[i].Position.X > sxHighest) ? verts[i].Position.X : sxHighest;
+
+        syLowest = (verts[i].Position.Y < syLowest) ? verts[i].Position.Y : syLowest; 
+        syHighest = (verts[i].Position.Y > syHighest) ? verts[i].Position.Y : syHighest; 
+
+        szLowest = (verts[i].Position.Z < szLowest) ? verts[i].Position.Z : szLowest; 
+        szHighest = (verts[i].Position.Z > szHighest) ? verts[i].Position.Z : szHighest; 
+    }
+
+    sxavg = 1920 / (abs(sxLowest) + abs(sxHighest));
+    syavg = 1080 / (abs(syLowest) + abs(syHighest));
+
+    sfavg = (sxavg < syavg) ? sxavg -5 : syavg -5;
+
+    matrix[0] = sxLowest;
+    matrix[1] = sxHighest;
+    matrix[2] = syLowest;
+    matrix[3] = syHighest;
+    matrix[4] = szLowest;
+    matrix[5] = szHighest;
+    matrix[6] = sfavg;
+    matrix[7] = (sxHighest + sxLowest)/2.0f;
+    matrix[8] = (syHighest + syLowest)/2.0f;
+    matrix[9] = (szHighest + szLowest)/2.0f;
+}
+/*
+ * This functions perform rotations, translations, scaletions
 */
-void applyMatrix(vector<Vertex> &vertices, int n, double matrix[4][4]){
+void applyMatrix(vector<Vertex> &vertices, float matrix[4][4]){
 	int i = 0;
 	int j = 0;
 	int op = 1;
@@ -238,73 +243,118 @@ void applyMatrix(vector<Vertex> &vertices, int n, double matrix[4][4]){
 }
 
 void scale(Mesh &model, int s){
-    float sxLowest = 0.0f, sxHighest = 0.0f;
-    float syLowest = 0.0f, syHighest = 0.0f;
-    int sxavg = 0, syavg = 0, sfavg = 0;
-
-    for (int i = 0; i < int(model.Vertices.size()); i++){
-        sxLowest = (model.Vertices[i].Position.X < sxLowest) ? model.Vertices[i].Position.X : sxLowest; 
-        sxHighest = (model.Vertices[i].Position.X > sxHighest) ? model.Vertices[i].Position.X : sxHighest;
-
-        syLowest = (model.Vertices[i].Position.Y < syLowest) ? model.Vertices[i].Position.Y : syLowest; 
-        syHighest = (model.Vertices[i].Position.Y > syHighest) ? model.Vertices[i].Position.Y : syHighest; 
-    }
-
-    sxavg = 1920 / (abs(sxLowest) + abs(sxHighest));
-    syavg = 1080 / (abs(syLowest) + abs(syHighest));
-
-    sfavg = (sxavg < syavg) ? sxavg -5 : syavg -5;
+        float matrix[4][4] = {
+		{(float)s, 0, 0, 0},
+		{0, (float)s, 0, 0},
+		{0, 0, (float)s, 0},
+		{0, 0, 0, 1}
+	};
     
-    cout << "Scaling model with " << sfavg << " factor..." << endl;
-    for (int i = 0; i < int(model.Vertices.size()); i++){
-        performScale(model.Vertices[i].Position, sfavg, sfavg);
-    }
-
+    cout << "Scaling model with " << s << " factor..." << endl;
+    applyMatrix(model.Vertices, matrix);
     for(int i = 0; i < int(model.Faces.size()); i++){
-        for(int j = 0; j < int(model.Faces[i].Vertices.size()); j++){
-            performScale(model.Faces[i].Vertices[j].Position, sfavg, sfavg);
-        }
+        applyMatrix(model.Faces[i].Vertices, matrix);
     }
 }
 
-void translate(Mesh &model, float x, float y){
-    float sxLowest = 0.0f, sxHighest = 0.0f;
-    float syLowest = 0.0f, syHighest = 0.0f;
-
-    for (int i = 0; i < int(model.Vertices.size()); i++){
-        sxLowest = (model.Vertices[i].Position.X < sxLowest) ? model.Vertices[i].Position.X : sxLowest; 
-        sxHighest = (model.Vertices[i].Position.X > sxHighest) ? model.Vertices[i].Position.X : sxHighest;
-
-        syLowest = (model.Vertices[i].Position.Y < syLowest) ? model.Vertices[i].Position.Y : syLowest; 
-        syHighest = (model.Vertices[i].Position.Y > syHighest) ? model.Vertices[i].Position.Y : syHighest; 
-    }
-
-    cout << "Translating model to (" << x << ", " << y << ")" << endl;
-    for (int i = 0; i < int(model.Vertices.size()); i++){
-        // Translate the vertices
-        performTranslate(model.Vertices[i].Position, abs(sxLowest) + x, abs(syLowest) + y);
-    }
-
-    for(int i = 0; i < int(model.Faces.size()); i++){
-        for(int j = 0; j < int(model.Faces[i].Vertices.size()); j++){
-            performTranslate(model.Faces[i].Vertices[j].Position, abs(sxLowest) + x, abs(syLowest) + y);
-        }
-    }
-}
-
-void rotate(Mesh &model, int n, double beta) { 
-    double cr = COS(beta);
-	double sr = SIN(beta);
-
-	double matrix[4][4] = {
-		{1, 0, 0, 0},
-		{0, cr, -sr, 0},
-		{0, sr, cr, 0},
+void translate(Mesh &model, float x, float y, float z){
+    
+    float matrix[4][4] = {
+		{1, 0, 0, x},
+		{0, 1, 0, y},
+		{0, 0, 1, z},
 		{0, 0, 0, 1}
 	};
 
-	applyMatrix(model.Vertices, n, matrix);
+    cout << "Translating model to (" << x << ", " << y << ", " << z << ")" << endl;
+    applyMatrix(model.Vertices, matrix);
     for(int i = 0; i < int(model.Faces.size()); i++){
-        applyMatrix(model.Faces[i].Vertices, n, matrix);
+        applyMatrix(model.Faces[i].Vertices, matrix);
+    }
+}
+
+void focalTranslation(Mesh &model, float x, float y, float z, float f){
+    float matrix[4][4] = {
+		{1, 0, 0, -x},
+		{0, 1, 0, -y},
+		{0, 0, 1, (3 * f) - z},
+		{0, 0, 1 / f, (((3 * f) - z)) / f}
+	};
+
+    cout << "Translating model to (" << x << ", " << y << ", " << z << ") and Focal " << f << endl;
+    applyMatrix(model.Vertices, matrix);
+    for(int i = 0; i < int(model.Faces.size()); i++){
+        applyMatrix(model.Faces[i].Vertices, matrix);
+    }
+}
+
+void translation(Mesh &model, float x, float y, float z){
+    
+    float matrix[4][4] = {
+		{1, 0, 0, -x},
+		{0, 1, 0, -y},
+		{0, 0, 1, -z},
+		{0, 0, 0, 1}
+	};
+
+    cout << "Translating model to (" << x << ", " << y << ", " << z << ")" << endl;
+    applyMatrix(model.Vertices, matrix);
+    for(int i = 0; i < int(model.Faces.size()); i++){
+        applyMatrix(model.Faces[i].Vertices, matrix);
+    }
+}
+
+void transform3D(Mesh &model){
+    for (int i = 0; i < model.Vertices.size(); i++) {
+		model.Vertices[i].Position.X /= model.Vertices[i].Position.W;
+		model.Vertices[i].Position.Y /= model.Vertices[i].Position.W;
+		model.Vertices[i].Position.Z /= model.Vertices[i].Position.W;
+	}
+
+    for(int i = 0; i < int(model.Faces.size()); i++){
+        for (int j = 0; j < model.Faces[i].Vertices.size(); j++) {
+            model.Faces[i].Vertices[j].Position.X /= model.Faces[i].Vertices[j].Position.W;
+            model.Faces[i].Vertices[j].Position.Y /= model.Faces[i].Vertices[j].Position.W;
+            model.Faces[i].Vertices[j].Position.Z /= model.Faces[i].Vertices[j].Position.W;
+        }
+    }
+}
+
+void rotate(Mesh &model, float beta, int ROTATE_FLAG) { 
+    float cr = COS(beta);
+	float sr = SIN(beta);
+
+    float matrix[4][4] = {
+        {1, 0, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1}
+    };
+
+    if(ROTATE_FLAG == ROTATE_ON_X){
+        matrix[1][1] = cr;
+        matrix[1][2] = -sr;
+        matrix[2][1] = sr;
+        matrix[2][2] = cr;
+    }else if(ROTATE_FLAG == ROTATE_ON_Y){
+        matrix[0][0] = cr;
+        matrix[0][2] = sr;
+        matrix[2][0] = -sr;
+        matrix[2][2] = cr;
+    }else if(ROTATE_FLAG == ROTATE_ON_Z){
+        matrix[0][1] = cr;
+        matrix[0][1] = -sr;
+        matrix[1][0] = sr;
+        matrix[1][1] = cr;
+    }else{
+        matrix[1][1] = cr;
+        matrix[1][2] = -sr;
+        matrix[2][1] = sr;
+        matrix[2][2] = cr;
+    }
+
+	applyMatrix(model.Vertices, matrix);
+    for(int i = 0; i < int(model.Faces.size()); i++){
+        applyMatrix(model.Faces[i].Vertices, matrix);
     }
 } 
