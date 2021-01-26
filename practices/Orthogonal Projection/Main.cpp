@@ -46,8 +46,12 @@ int printPerspectives(string filename, int view){
     file.close();
 
     if(meshModel.Vertices.size() != 0){
+        float helperMatrix[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        
         scale(meshModel, 0);
-        translate(meshModel, 5, 5);
+        getMaxMins(meshModel.Vertices, helperMatrix);
+        translate(meshModel, 0, 0);
+        getMaxMins(meshModel.Vertices, helperMatrix);
 
         unsigned char r = 0xFF;
         unsigned char g = 0x00;
@@ -55,10 +59,10 @@ int printPerspectives(string filename, int view){
 
         for(int i = 0; i < int(meshModel.Faces.size()); i++){
             for(int j = 0; j < int(meshModel.Faces[i].Vertices.size())-1; j+=1){
-                unsigned int x1 = meshModel.Faces[i].Vertices[j].Position.X;
-                unsigned int y1 = meshModel.Faces[i].Vertices[j].Position.Y;
-                unsigned int x2 = meshModel.Faces[i].Vertices[j+1].Position.X;
-                unsigned int y2 = meshModel.Faces[i].Vertices[j+1].Position.Y;
+                unsigned int x1 = meshModel.Faces[i].Vertices[j].Position.X + (960 - helperMatrix[7]);
+                unsigned int y1 = meshModel.Faces[i].Vertices[j].Position.Y + (540 - helperMatrix[8]);
+                unsigned int x2 = meshModel.Faces[i].Vertices[j+1].Position.X + (960 - helperMatrix[7]);
+                unsigned int y2 = meshModel.Faces[i].Vertices[j+1].Position.Y + (540 - helperMatrix[8]);
                 mRaster->drawLine(x1, y1, x2, y2, r, g, b);
             }
         }

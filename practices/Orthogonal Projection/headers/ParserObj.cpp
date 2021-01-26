@@ -130,6 +130,43 @@ string firstToken(const string &in) {
     return "";
 }
 
+/*
+ * Helper functions
+ */
+void getMaxMins(vector<Vertex> &verts, float matrix[10]){
+    float sxLowest = 0.0f, sxHighest = 0.0f;
+    float syLowest = 0.0f, syHighest = 0.0f;
+    float szLowest = 0.0f, szHighest = 0.0f;
+    int sxavg = 0, syavg = 0, sfavg = 0;
+
+    for (int i = 0; i < int(verts.size()); i++){
+        sxLowest = (verts[i].Position.X < sxLowest) ? verts[i].Position.X : sxLowest; 
+        sxHighest = (verts[i].Position.X > sxHighest) ? verts[i].Position.X : sxHighest;
+
+        syLowest = (verts[i].Position.Y < syLowest) ? verts[i].Position.Y : syLowest; 
+        syHighest = (verts[i].Position.Y > syHighest) ? verts[i].Position.Y : syHighest; 
+
+        szLowest = (verts[i].Position.Z < szLowest) ? verts[i].Position.Z : szLowest; 
+        szHighest = (verts[i].Position.Z > szHighest) ? verts[i].Position.Z : szHighest; 
+    }
+
+    sxavg = 1920 / (abs(sxLowest) + abs(sxHighest));
+    syavg = 1080 / (abs(syLowest) + abs(syHighest));
+
+    sfavg = (sxavg < syavg) ? sxavg -5 : syavg -5;
+
+    matrix[0] = sxLowest;
+    matrix[1] = sxHighest;
+    matrix[2] = syLowest;
+    matrix[3] = syHighest;
+    matrix[4] = szLowest;
+    matrix[5] = szHighest;
+    matrix[6] = sfavg;
+    matrix[7] = (sxHighest + sxLowest)/2.0f;
+    matrix[8] = (syHighest + syLowest)/2.0f;
+    matrix[9] = (szHighest + szLowest)/2.0f;
+}
+
 // Transformation functions
 // find new pixel
 void findNewCoordinate(int s[][2], float p[][1]) { 

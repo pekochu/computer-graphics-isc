@@ -99,6 +99,8 @@ void split(const string&, vector<string>&, string);
 void getVertices(vector<Facesx> &, vector<Vertex> &, const vector<Vector3>&, string);
 string tail(const string&);
 string firstToken(const string&);
+// helper functions to transformations
+void getMaxMins(vector<Vertex>&, float matrix[10]);
 // Transformation algorithms
 void findNewCoordinate(int [][2], float [][1]);
 void performScale(Vector3 &, int, int);
