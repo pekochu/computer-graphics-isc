@@ -3,8 +3,8 @@
 using namespace std;
 
 // Rotations
-#define SIN(x) sin(x * 3.141592653589/180) 
-#define COS(x) cos(x * 3.141592653589/180) 
+#define SIN(x) sin(x * 3.14159/180) 
+#define COS(x) cos(x * 3.14159/180) 
 
 // Enumarations for setting XY, XZ, YZ
 enum viewsFlags {

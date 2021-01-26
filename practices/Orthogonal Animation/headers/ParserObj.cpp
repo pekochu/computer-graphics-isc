@@ -266,7 +266,7 @@ void translate(Mesh &model, float x, float y, float z){
 		{0, 0, 0, 1}
 	};
 
-    cout << "Translating model to (" << x << ", " << y << ", " << z << ")" << endl;
+    // cout << "Translating model to (" << x << ", " << y << ", " << z << ")" << endl;
     applyMatrix(model.Vertices, matrix);
     for(int i = 0; i < int(model.Faces.size()); i++){
         applyMatrix(model.Faces[i].Vertices, matrix);
@@ -333,22 +333,22 @@ void rotate(Mesh &model, float beta, int ROTATE_FLAG) {
 
     if(ROTATE_FLAG == ROTATE_ON_X){
         matrix[1][1] = cr;
-        matrix[1][2] = -sr;
+        matrix[1][2] = (sr)*(-1);
         matrix[2][1] = sr;
         matrix[2][2] = cr;
     }else if(ROTATE_FLAG == ROTATE_ON_Y){
         matrix[0][0] = cr;
         matrix[0][2] = sr;
-        matrix[2][0] = -sr;
+        matrix[2][0] = (sr)*(-1);
         matrix[2][2] = cr;
     }else if(ROTATE_FLAG == ROTATE_ON_Z){
         matrix[0][1] = cr;
-        matrix[0][1] = -sr;
+        matrix[0][1] = (sr)*(-1);
         matrix[1][0] = sr;
         matrix[1][1] = cr;
     }else{
         matrix[1][1] = cr;
-        matrix[1][2] = -sr;
+        matrix[1][2] = (sr)*(-1);
         matrix[2][1] = sr;
         matrix[2][2] = cr;
     }
