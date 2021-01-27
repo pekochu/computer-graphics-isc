@@ -1,13 +1,12 @@
-## Practice: drawing a line
+# Practice: Perspective projection
 
-On this practice, we draw a line on a "canvas" with different algoritms, some more efficient than the other one. In this case, we've implement these algorithms:
-+ [Bresenham's Algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm)
-+ [DDA Algorithm](https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm))
-+ [Naive line drawing Algorithm](https://en.wikipedia.org/wiki/Line_drawing_algorithm)
+Image rendered with the Bresenham Algorithm. I've take advantage of my CPU 3 cores to render the perspective views at the same time.
 
-## Sample output image
+### XY View
+![XY View](XYView.ppm.png)
 
-This is a image rendered by the program generating 500 random lines with a random color.
-![sample](sample.jpg)
-This image was rendered with the Naive Algorithm.
+### XZ View
+![XY View](XZView.ppm.png)
 
+### ZY View
+![XY View](ZYView.ppm.png)

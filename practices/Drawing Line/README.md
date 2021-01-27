@@ -1,4 +1,4 @@
-## Practice: drawing a line
+# Practice: drawing a line
 
 On this practice, we draw a line on a "canvas" with different algoritms, some more efficient than the other one. In this case, we've implement these algorithms:
 + [Bresenham's Algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm)
@@ -8,6 +8,5 @@ On this practice, we draw a line on a "canvas" with different algoritms, some mo
 ## Sample output image
 
 This is a image rendered by the program generating 500 random lines with a random color.
-![sample](sample.jpg)
+![Random Lines](sample.jpg)
 This image was rendered with the Naive Algorithm.
-
