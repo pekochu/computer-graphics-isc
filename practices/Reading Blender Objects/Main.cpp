@@ -39,28 +39,11 @@ int main(int argc, char const *argv[]){
         
     if(meshModel.Vertices.size() != 0){
         scale(meshModel, 0);
-        translate(meshModel, 5, 5);
-        rotate(meshModel, 0, 0, 30);
         translate(meshModel, 0, 0);
 
         unsigned char r = 0xFF;
         unsigned char g = 0xFF;
         unsigned char b = 0xFF;
-
-        /* for (int i = 0; i < int(meshModel.Vertices.size()) - 1; i+=1){
-            // draw the model
-            mRaster->drawLine(meshModel.Vertices[i].Position.X, meshModel.Vertices[i].Position.Y,
-                    meshModel.Vertices[i+1].Position.X, meshModel.Vertices[i+1].Position.Y, r, g, b);
-        } */
-
-        /* for(int i = 0; i < int(meshModel.Faces.size()); i++){
-            for(int j = 0; j < int(meshModel.Faces[i].Vertices.size()); j+=2){
-                mRaster->drawLine(meshModel.Faces[i].Vertices[j].Position.X, meshModel.Faces[i].Vertices[j].Position.Y,
-                        meshModel.Faces[i].Vertices[j+1].Position.X, meshModel.Faces[i].Vertices[j+1].Position.Y, r, g, b);
-                cout << "Face " << i + 1 << ". X = " << meshModel.Faces[i].Vertices[j].Position.X; 
-                cout << "\tY = " <<  meshModel.Faces[i].Vertices[j].Position.Y << endl;
-            }            
-        } */
 
         for(int i = 0; i < int(meshModel.Faces.size()); i++){
             for(int j = 0; j < int(meshModel.Faces[i].Vertices.size())-1; j+=1){
