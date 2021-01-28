@@ -9,7 +9,7 @@ Student: Bravo López Luis Ángel
 1. [Implementation of the line drawing algorithms such as Naive, DDA and Bresenham. Make Bresenham algorithm version using threads.](https://github.com/pekochu/computer-graphics-isc/tree/main/practices/Drawing%20Line)
 2. [Read an .obj file from Blender and drawing the model with the Line Drawing Algorithm.](https://github.com/pekochu/computer-graphics-isc/tree/main/practices/Reading%20Blender%20Objects)
 3. [Animate the Blender model with rotation and make a video with it.](https://github.com/pekochu/computer-graphics-isc/tree/main/practices/Orthogonal%20Projection)
-4. [Read an .obj file from Blender and parse it to a .vlf file for further assignments.](https://github.com/pekochu/computer-graphics-isc/tree/main/practices/Orthogonal%20Animation)
+4. [Read an .obj file from Blender and parse it to a .vlf file for further assignments.](https://github.com/pekochu/computer-graphics-isc/tree/main/practices/VLF%20Parser)
 5. [Z-Buffer and Scanline](https://github.com/pekochu/computer-graphics-isc/tree/main/practices/ZBuffer)
 
 # Summary
@@ -50,7 +50,7 @@ I have needed to implement an algorithm to make polygons with n sides into trian
 ![Square without triangles](./practices/VLF%20Parser/CubeWithoutTriangles.png)
 
 ### Square with triangles
-![Square with triangles](./practices/VLF%20Parser/CubeWithoutTriangles.png)
+![Square with triangles](./practices/VLF%20Parser/CubeWithTriangles.png)
 
 Also, I created new structures called Face and Edge, to better manage the VLF. I also added new attributes, called index, to the structures, to be able to write the VLF file fulfilling the file requirements.
 
