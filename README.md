@@ -42,4 +42,31 @@ One of the more frustating practices I ever had, just because I was strugling wi
 ### Video from YouTube
 [![YouTube](https://img.youtube.com/vi/c3h0p4jMf9U/0.jpg)](https://www.youtube.com/watch?v=c3h0p4jMf9U)
 
+## Triangulation and VLF exporter
 
+I have needed to implement an algorithm to make polygons with n sides into triangles. So, this was easy with squares, but with polygons with n sides was a little bit hard. In the end, I was able to pull this off.
+
+### Square without triangles
+![Square without triangles](./practices/VLF%20Parser/CubeWithoutTriangles.png)
+
+### Square with triangles
+![Square with triangles](./practices/VLF%20Parser/CubeWithoutTriangles.png)
+
+Also, I created new structures called Face and Edge, to better manage the VLF. I also added new attributes, called index, to the structures, to be able to write the VLF file fulfilling the file requirements.
+
+### Preview: header of VLF
+
+```
+00000000  80 b5 00 00 80 b5 00 00  80 3c 00 00 bd fc d6 3e  |.........<.....>|
+```
+The first 8 bytes are to represent the size of the model vertices. `` 80 b5 00 00 `` = 46464 vertices. 
+
+The next 8 bytes are to represent the size of the model edges. `` 80 b5 00 00 `` = 46464 edges. 
+
+The next 8 bytes are to represent the size of the model faces. `` 80 3c 00 00 `` = 15488 faces. 
+
+**These values are from the Suzanne model. For more information, please check the folder practice.**
+
+## Z-Buffer and Scanline
+
+``In progress...``

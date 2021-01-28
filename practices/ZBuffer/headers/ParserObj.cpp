@@ -749,6 +749,7 @@ void createVLF(Mesh &mesh, VLF &model){
         faces.push_back(mFace);
     }
 
+    model.Vertices = mesh.Vertices;
     model.Edges = edges;
     model.Faces = faces;
 }
