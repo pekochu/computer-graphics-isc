@@ -1,6 +1,8 @@
 # Computer Graphics
 Notes, assignments and projects of the Computer Graphics learning unit
+
 Teacher: M. en C. Rafael Norman Saucedo Delgado
+
 Student: Bravo López Luis Ángel
 
 ## Assignments
@@ -35,7 +37,7 @@ Image rendered with the Bresenham algorithm. I've take advantage of my CPU 3 cor
 ![XY View](./practices/Orthogonal%20Projection/ZYView.ppm.png)
 
 ## Animation!
-One of the more frustating practices I ever had, just because I was strugling with centering the model, but, after MOTHS I finally figured out. Just check it out.
+One of the more frustating practices I ever had, just because I was strugling with centering the model, but, after MONTHS I finally figured out. Just check it out.
 
 ### Video from YouTube
 [![YouTube](https://img.youtube.com/vi/c3h0p4jMf9U/0.jpg)](https://www.youtube.com/watch?v=c3h0p4jMf9U)
