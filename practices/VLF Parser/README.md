@@ -3,7 +3,7 @@
 This practice is divided by two parts
 
 ## Part 1: Triangulation
-The hardest part. I have needed to implement an algorithm to make polygons with n sides into triangles. So, this was easy with squares, but with polygons with n sides was a little bit hard. In the end, I was able to pull this off.
+The hardest part. I needed to implement an algorithm to convert polygons with n sides into triangles. This was easy with squares, but with n-sided polygons it was a bit difficult. In the end, I was able to pull this off.
 
 ### Square without triangles
 ![Square without triangles](CubeWithoutTriangles.png)

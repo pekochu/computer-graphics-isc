@@ -44,7 +44,7 @@ One of the more frustating practices I ever had, just because I was strugling wi
 
 ## Triangulation and VLF exporter
 
-I have needed to implement an algorithm to make polygons with n sides into triangles. So, this was easy with squares, but with polygons with n sides was a little bit hard. In the end, I was able to pull this off.
+I needed to implement an algorithm to convert polygons with n sides into triangles. This was easy with squares, but with n-sided polygons it was a bit difficult. In the end, I was able to do it.
 
 ### Square without triangles
 ![Square without triangles](./practices/VLF%20Parser/CubeWithoutTriangles.png)
